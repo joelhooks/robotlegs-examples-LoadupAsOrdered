@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/halo" width="300" height="400" xmlns:loadupasordered="org.robotlegs.examples.loadupasordered.*" creationComplete="application1_creationCompleteHandler(event)">
+	<s:layout>
+		<s:VerticalLayout paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10"/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			
+			import mx.events.FlexEvent;
+			
+			import org.robotlegs.examples.loadupasordered.LoadupContext;
+			import org.robotlegs.utilities.loadup.events.LoadupEvent;
+			
+			protected var context:LoadupContext;
+			
+			[Bindable]
+			public var displayText:String;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				context = new LoadupContext(this);
+			}
+
+
+			protected function loadResourcesButton_clickHandler(event:MouseEvent):void
+			{
+				displayText = "loading started...\n";
+				this.loadResourcesButton.enabled = false;
+				this.dispatchEvent(new LoadupEvent(LoadupEvent.LOAD_RESOURCES));
+			}
+
+		]]>
+	</fx:Script>
+	<s:HGroup width="100%" verticalAlign="middle">
+		<s:Button id="loadResourcesButton" click="loadResourcesButton_clickHandler(event)" label="load now"/>
+		<mx:ProgressBar id="progressBar" width="100%" mode="manual" labelPlacement="right" fontSize="9" fontWeight="normal" verticalGap="0" labelWidth="0" horizontalGap="0"/>
+	</s:HGroup>
+	
+	<s:TextArea id="loadupResultsText" editable="false" selectable="false" width="100%" text="{displayText}"/>
+</s:Application>
