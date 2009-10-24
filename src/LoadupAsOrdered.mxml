@@ -28,6 +28,7 @@
 			{
 				displayText = "loading started...\n";
 				this.loadResourcesButton.enabled = false;
+				progressBar.setProgress(0, 100);
 				this.dispatchEvent(new LoadupEvent(LoadupEvent.LOAD_RESOURCES));
 			}
 

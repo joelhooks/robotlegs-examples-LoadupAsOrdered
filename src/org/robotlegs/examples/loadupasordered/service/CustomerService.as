@@ -10,7 +10,6 @@ package org.robotlegs.examples.loadupasordered.service
 	import net.digitalprimates.fluint.stubs.HTTPServiceStub;
 	
 	import org.robotlegs.mvcs.Service;
-	import org.robotlegs.utilities.async.AsyncStubService;
 	import org.robotlegs.utilities.loadup.events.ResourceEvent;
 	import org.robotlegs.utilities.loadup.interfaces.IResource;
 	
@@ -20,23 +19,26 @@ package org.robotlegs.examples.loadupasordered.service
 		public static var LOADING:String = "customerServiceLoading";
 		public static var LOAD_FAILED:String = "customerServiceLoadFailed";
 		
-		protected var service:AsyncStubService;
+		protected var service:HTTPServiceStub;
 		
 		public function CustomerService()
 		{
-			service = new AsyncStubService();
+			service = new HTTPServiceStub();
 		}
 		
 		public function load():void
 		{
-			service.asyncAction(handleResult, handleFault)
+			var token:AsyncToken = service.send();
+			var responder:Responder = new Responder(handleResult, handleFault);
+			
+			token.addResponder(responder);
 			
 			//this event is purely optional, and is used to let the framework know
 			//that this specific service/resource is loaded and respond accordingly
 			dispatch( new Event(CustomerService.LOADING));		
 		}
 		
-		public function handleResult():void
+		public function handleResult(event:ResultEvent):void
 		{
 			//this event is purely optional, and is used to let the framework know
 			//that this specific service/resource is loaded and respond accordingly
@@ -45,7 +47,7 @@ package org.robotlegs.examples.loadupasordered.service
 			dispatch( new ResourceEvent(ResourceEvent.RESOURCE_LOADED, this));
 		}
 		
-		public function handleFault():void
+		public function handleFault(event:FaultEvent):void
 		{
 			//this event is purely optional, and is used to let the framework know
 			//that this specific service/resource is loaded and respond accordingly

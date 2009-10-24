@@ -52,7 +52,7 @@ package org.robotlegs.examples.loadupasordered.view
 		{
 			view.displayText += "loading finished incomplete\n";
 			view.loadResourcesButton.enabled = true;
-			view.progressBar.setProgress(0, 100);
+			
 			//event.monitor.destroy();
 		}
 		
