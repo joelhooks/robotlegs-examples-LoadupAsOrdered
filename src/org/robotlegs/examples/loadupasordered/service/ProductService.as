@@ -12,12 +12,14 @@ package org.robotlegs.examples.loadupasordered.service
 	import org.robotlegs.mvcs.Service;
 	import org.robotlegs.utilities.loadup.events.ResourceEvent;
 	import org.robotlegs.utilities.loadup.interfaces.IResource;
+	import org.robotlegs.utilities.loadup.model.ResourceEventTypes;
 	
 	public class ProductService extends Service implements IResource
 	{
-		public static var LOADED:String = "invoiceServiceLoaded";
-		public static var LOADING:String = "invoiceServiceLoading";
-		public static var LOAD_FAILED:String = "invoiceServiceLoadFailed";
+		public static var LOADED:String = "productServiceLoaded";
+		public static var LOADING:String = "productServiceLoading";
+		public static var LOAD_FAILED:String = "productServiceLoadFailed";
+		public static var LOAD_TIMED_OUT:String = "productServiceLoadTimedOut";
 		
 		protected var service:HTTPServiceStub;
 		
@@ -33,21 +35,25 @@ package org.robotlegs.examples.loadupasordered.service
 			
 			token.addResponder(responder);
 			
-			//this event is purely optional, and is used to let the framework know
-			//that this specific service/resource is loaded and respond accordingly
-			dispatch( new Event(ProductService.LOADING));		
+		}
+		
+		public function getResourceEventTypes(value:ResourceEventTypes):ResourceEventTypes
+		{
+			value.loading = LOADING;
+			value.loaded = LOADED;
+			value.loadingFailed = LOAD_FAILED;
+			value.loadingTimedOut = LOAD_TIMED_OUT;
+			return value;
 		}
 		
 		public function handleResult(event:ResultEvent):void
 		{
-			dispatch( new Event(ProductService.LOADED));
 			//notify the LoadupUtility that this service loaded.
 			dispatch( new ResourceEvent(ResourceEvent.RESOURCE_LOADED, this));
 		}
 		
 		public function handleFault(event:FaultEvent):void
 		{
-			dispatch( new Event(ProductService.LOAD_FAILED));	
 			//notify the LoadupUtility that this service failed.
 			dispatch( new ResourceEvent(ResourceEvent.RESOURCE_LOAD_FAILED, this));
 		}

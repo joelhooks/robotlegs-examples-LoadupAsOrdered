@@ -10,6 +10,7 @@ package org.robotlegs.examples.loadupasordered.view
 	import org.robotlegs.mvcs.Mediator;
 	import org.robotlegs.utilities.loadup.events.LoadupEvent;
 	import org.robotlegs.utilities.loadup.events.LoadupMonitorEvent;
+	import org.robotlegs.utilities.loadup.events.ResourceEvent;
 	
 	public class ApplicationMediator extends Mediator
 	{
@@ -29,19 +30,43 @@ package org.robotlegs.examples.loadupasordered.view
 			eventMap.mapListener( eventDispatcher, LoadupMonitorEvent.LOADING_PROGRESS, handleLoadupProgress );
 			eventMap.mapListener( eventDispatcher, LoadupMonitorEvent.LOADING_FINISHED_INCOMPLETE, handleLoadupFinishedIncomplete );
 			
-			eventMap.mapListener( eventDispatcher, CustomerService.LOADED, handleServiceLoaded );
-			eventMap.mapListener( eventDispatcher, DebtorAccountService.LOADED, handleServiceLoaded );
-			eventMap.mapListener( eventDispatcher, InvoiceService.LOADED, handleServiceLoaded );
-			eventMap.mapListener( eventDispatcher, ProductService.LOADED, handleServiceLoaded );
-			eventMap.mapListener( eventDispatcher, SalesOrderService.LOADED, handleServiceLoaded );
+			eventMap.mapListener( eventDispatcher, CustomerService.LOADED, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, DebtorAccountService.LOADED, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, InvoiceService.LOADED, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, ProductService.LOADED, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, SalesOrderService.LOADED, handleServiceSpecificMessage );
+			
+			eventMap.mapListener( eventDispatcher, CustomerService.LOADING, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, DebtorAccountService.LOADING, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, InvoiceService.LOADING, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, ProductService.LOADING, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, SalesOrderService.LOADING, handleServiceSpecificMessage );
+
+			eventMap.mapListener( eventDispatcher, CustomerService.LOAD_FAILED, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, DebtorAccountService.LOAD_FAILED, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, InvoiceService.LOAD_FAILED, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, ProductService.LOAD_FAILED, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, SalesOrderService.LOAD_FAILED, handleServiceSpecificMessage );
+
+			eventMap.mapListener( eventDispatcher, CustomerService.LOAD_TIMED_OUT, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, DebtorAccountService.LOAD_TIMED_OUT, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, InvoiceService.LOAD_TIMED_OUT, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, ProductService.LOAD_TIMED_OUT, handleServiceSpecificMessage );
+			eventMap.mapListener( eventDispatcher, SalesOrderService.LOAD_TIMED_OUT, handleServiceSpecificMessage );
 		}
 		
 		protected function handleLoadupComplete(event:LoadupMonitorEvent):void
 		{
-			view.displayText += "loading is complete";
+			view.appendMessageText("loading is complete");
 			view.loadResourcesButton.enabled = true;
 			//event.monitor.destroy();
 		}
+		
+		protected function handleServiceSpecificMessage(event:ResourceEvent):void
+		{
+			view.appendMessageText(event.type);
+		}
+	
 
 		protected function handleLoadupProgress(event:LoadupMonitorEvent):void
 		{
@@ -50,15 +75,10 @@ package org.robotlegs.examples.loadupasordered.view
 
 		protected function handleLoadupFinishedIncomplete(event:LoadupMonitorEvent):void
 		{
-			view.displayText += "loading finished incomplete\n";
+			view.appendMessageText("loading finished incomplete");
 			view.loadResourcesButton.enabled = true;
 			
 			//event.monitor.destroy();
-		}
-		
-		protected function handleServiceLoaded(event:Event):void
-		{
-			view.displayText += event.type + "\n";
 		}
 	}
 }
