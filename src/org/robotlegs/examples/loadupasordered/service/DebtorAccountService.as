@@ -1,7 +1,5 @@
 package org.robotlegs.examples.loadupasordered.service
 {
-	import flash.events.Event;
-	
 	import mx.rpc.AsyncToken;
 	import mx.rpc.Responder;
 	import mx.rpc.events.FaultEvent;
@@ -9,12 +7,12 @@ package org.robotlegs.examples.loadupasordered.service
 	
 	import net.digitalprimates.fluint.stubs.HTTPServiceStub;
 	
-	import org.robotlegs.mvcs.Service;
+	import org.robotlegs.mvcs.Actor;
 	import org.robotlegs.utilities.loadup.events.ResourceEvent;
 	import org.robotlegs.utilities.loadup.interfaces.IResource;
 	import org.robotlegs.utilities.loadup.model.ResourceEventTypes;
 	
-	public class DebtorAccountService extends Service implements IResource
+	public class DebtorAccountService extends Actor implements IResource
 	{
 		public static var LOADED:String = "debtorServiceLoaded";
 		public static var LOADING:String = "debtorServiceLoading";

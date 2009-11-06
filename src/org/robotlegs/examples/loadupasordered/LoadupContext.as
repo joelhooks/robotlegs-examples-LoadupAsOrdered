@@ -19,9 +19,9 @@ package org.robotlegs.examples.loadupasordered
 		
 		override public function startup() : void
 		{
-			commandMap.mapEvent( StartupCommand, ContextEvent.STARTUP, ContextEvent, true );
+			commandMap.mapEvent( ContextEvent.STARTUP, StartupCommand, ContextEvent, true );
 			
-			commandMap.mapEvent( LoadResourcesCommand, LoadupEvent.LOAD_RESOURCES );
+			commandMap.mapEvent( LoadupEvent.LOAD_RESOURCES, LoadResourcesCommand );
 			
 			dispatchEvent( new ContextEvent(ContextEvent.STARTUP));
 		}

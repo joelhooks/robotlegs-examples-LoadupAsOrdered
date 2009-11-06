@@ -1,7 +1,5 @@
 package org.robotlegs.examples.loadupasordered.service
 {
-	import flash.events.Event;
-	
 	import mx.rpc.AsyncToken;
 	import mx.rpc.Responder;
 	import mx.rpc.events.FaultEvent;
@@ -9,17 +7,17 @@ package org.robotlegs.examples.loadupasordered.service
 	
 	import net.digitalprimates.fluint.stubs.HTTPServiceStub;
 	
-	import org.robotlegs.mvcs.Service;
+	import org.robotlegs.mvcs.Actor;
 	import org.robotlegs.utilities.loadup.events.ResourceEvent;
 	import org.robotlegs.utilities.loadup.interfaces.IResource;
 	import org.robotlegs.utilities.loadup.model.ResourceEventTypes;
 	
-	public class SalesOrderService extends Service implements IResource
+	public class SalesOrderService extends Actor implements IResource
 	{
-		public static var LOADED:String = "salesOrderServiceLoaded";
-		public static var LOADING:String = "salesOrderServiceLoading";
-		public static var LOAD_FAILED:String = "salesOrderServiceLoadFailed";
-		public static var LOAD_TIMED_OUT:String = "salesOrderServiceLoadTimedOut";
+		public static const LOADED:String = "salesOrderServiceLoaded";
+		public static const LOADING:String = "salesOrderServiceLoading";
+		public static const LOAD_FAILED:String = "salesOrderServiceLoadFailed";
+		public static const LOAD_TIMED_OUT:String = "salesOrderServiceLoadTimedOut";
 		
 		protected var service:HTTPServiceStub;
 		

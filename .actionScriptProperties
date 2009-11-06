@@ -10,8 +10,8 @@
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
       <libraryPathEntry kind="3" linkType="1" path="/robotlegs-utilities-Loadup/bin/robotlegs-utilities-Loadup.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/utilities-AsyncServiceStub/bin/utilities-AsyncServiceStub.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/robotlegs-framework/bin/robotlegs-framework.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/utilities-AsyncServiceStubs/bin/utilities-AsyncServiceStubs.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
